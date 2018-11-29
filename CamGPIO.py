@@ -68,16 +68,17 @@ def main2():
                 Correction = 100
                 allforward(Correction)
             elif value[0] > 20000 and value[2] < 20000: #right
-                turnleft(100)
+                turnright(100)
                 print("Value 2: ", value[2])
                 print("right")
             elif value[2] > 20000 and value[0] < 20000: #Left
-                turnright(100)
+                turnleft(100)
                 print("Value 0: ", value[0])
                 print("left")
             elif value[2] >20000 and value[0] > 20000:
                 print("backwards")
-                testfunc()
+                backward(100)
+                #testfunc()
             print("end")
     except KeyboardInterrupt:
         GPIO.cleanup()
@@ -85,19 +86,19 @@ def main2():
 def allforward(dc):
     print(dc)
     GPIO.output(forward_stop, 0)
-    pwmfrf.start(dc)    
-    pwmbrf.start(dc)
-    pwmflf.start(dc)
-    pwmblf.start(dc)
+    GPIO.output(forward_list, 1)
+
+
+def backward(dc):
+    print(dc)
+    GPIO.output(forward_list, 0)
+    GPIO.output(forward_stop, 1)
 
     
 def turnleft(dc):
     print(dc)
     GPIO.output(right_list, 0)
-    pwmfrf.start(dc)
-    pwmbrf.start(dc)
-    pwmflb.start(dc)
-    pwmblb.start(dc)
+    GPIO.output(left_list, 1)
 
 #left_list = [26,16,21,6] #to turn car left
 #right_list = [19,13,20,5] # -\\- right
@@ -121,20 +122,20 @@ motordict= {
 def turnright(dc):
     print(dc)
     GPIO.output(left_list, 0)
-    pwmflf.start(dc)
-    pwmblf.start(dc)
-    pwmfrb.start(dc)
-    pwmbrb.start(dc)
+    GPIO.output(right_list, 1)
 
 def testfunc():
     print("Test")
     GPIO.output(all_list, 0)
-    iner = input("Please enter motor\n")
-    GPIO.output(motordict[iner],1)
+##    iner = input("Please enter motor\n")
+##    GPIO.output(motordict[iner],1)
+##    input()
+##    GPIO.output(motordict[iner],1)
+##    input()
     input()
-    GPIO.output(motordict[iner],1)
+    GPIO.output(right_list,1)
     input()
-    
+    GPIO.output(right_list,0)
 
 #function end
 
