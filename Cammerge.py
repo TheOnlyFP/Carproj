@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 import RPi.GPIO as GPIO
-from time import sleep
-import numpy as np
+from time import sleep #Not used
+import numpy as np #Needed for opencv it seems, also used in camcap()
 import cv2
 
 #import ends
@@ -46,6 +46,8 @@ Setpoint=0
 Error=0
 Waittime=1000
 
+# ^ = PID-Legacy-code
+
 #Motorpins end
 
 def camcap():
@@ -53,25 +55,25 @@ def camcap():
     if cap.isOpened() == 0:
         cap.open(0)
 
-    greyframe = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    greyframe = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #Changes into Greyframe
 
-    blackframe = cv2.threshold(greyframe, threshhold, 255, cv2.THRESH_BINARY)[1]
+    blackframe = cv2.threshold(greyframe, threshhold, 255, cv2.THRESH_BINARY)[1]    #Changes into B/W 
 
-    mid = sum(blackframe[:,40])
+    mid = sum(blackframe[:,40]) # Takes the value of the 40th column
 
     left = sum(blackframe[:,26])
 
     right = sum(blackframe[:,53])
 
-    cv2.imshow('frame',blackframe)
+    cv2.imshow('frame',blackframe)  #Shows picture in frame called "frame"
 
-        #print(nonze)
-
-    if cv2.waitKey(1) == ord('q'):
+    if cv2.waitKey(0) == ord('q'):  #Allows for quitting the the frame
+        #cv2.waitKey was changed to 0 as it defines how many millisecond it should wait for keypress
+        #As no key is used: It's legacy code
         cap.release()
         cv2.destroyAllWindows()
 
-    value=[left, mid, right]
+    value=[left, mid, right] #Bundles values into list
 
     print(value)
 
@@ -79,12 +81,15 @@ def camcap():
 
 def main():
     cap = cv2.VideoCapture(0)
-    threshhold=90
     width=80
     height=40
     ret = cap.set(3,80)
     ret = cap.set(4,40)
+    #All this shit defines the taken picture
+    threshhold=90
+    #Defines threshhold for B/W conversion
     try:
+        #ALL below needs tuning on the numbers as the framesize was changed
         while True:
             value = camcap()
             if value[1] < 6000: #forward
@@ -113,6 +118,11 @@ def turnleft(dc):
     GPIO.output(right_list, 0)
     GPIO.output(left_list, 1)
 
+
+def turnright(dc):
+    GPIO.output(left_list, 0)
+    GPIO.output(right_list, 1)
+
 #left_list = [26,16,21,6] #to turn car left
 #right_list = [19,13,20,5] # -\\- right
 
@@ -121,22 +131,19 @@ def turnleft(dc):
 #mfr = f(21) b(20)
 #mbr = f(6)  b(5)
 
-motordict= {
-    "mflf":19,
-    "mflb":26,
-    "mblf":13,
-    "mblb":16,
-    "mfrf":21,
-    "mfrb":20,
-    "mbrf":6,
-    "mbrb":5,
-    }
+##motordict= {  #Legacy
+##    "mflf":19,
+##    "mflb":26,
+##    "mblf":13,
+##    "mblb":16,
+##    "mfrf":21,
+##    "mfrb":20,
+##    "mbrf":6,
+##    "mbrb":5,
+##    }
 
-def turnright(dc):
-    GPIO.output(left_list, 0)
-    GPIO.output(right_list, 1)
 
-def testfunc():
+def testfunc(): #Legacy
     print("Test")
     GPIO.output(all_list, 0)
 ##    iner = input("Please enter motor\n")
@@ -154,9 +161,7 @@ def testfunc():
 
 #Event end
 
-GPIO.output(right_list, 0)
-
-print("start")
+print("start") #Kinda not needed, looks good though
 
 main()
 
