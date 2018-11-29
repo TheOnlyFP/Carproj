@@ -5,6 +5,7 @@ import cv2
 
 def camcap():
     global value
+    print("camcap")
     cap = cv2.VideoCapture(0)
     threshhold=90
     ret, frame = cap.read()
@@ -44,11 +45,11 @@ def camcap():
 
     return value
 
-##    if cv2.waitKey(1) == ord('q'):
-##        cap.release()
-##        cv2.destroyAllWindows()
+#    if cv2.waitKey(1) == ord('q'):
+#        cap.release()
+#        cv2.destroyAllWindows()
 
-while True:
-    camcap()
+
+camcap()
 
 

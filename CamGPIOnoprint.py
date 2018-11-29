@@ -59,7 +59,7 @@ def main():
         while True:
             value = camcap()
             print(value)
-            if value[1] == 0: #forward
+            if value[1] < 18000: #forward
                 allforward(50)
             elif value[0] > 5000 and value[2] < 30000: #right
                 turnright(50)
