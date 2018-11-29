@@ -68,11 +68,11 @@ def main2():
                 Correction = 100
                 allforward(Correction)
             elif value[0] > 20000 and value[2] < 20000: #right
-                turnright(int(value[0]/61200)*100)
+                turnleft(100)
                 print("Value 2: ", value[2])
                 print("right")
             elif value[2] > 20000 and value[0] < 20000: #Left
-                turnleft(int(value[2]/61200)*100)
+                turnright(100)
                 print("Value 0: ", value[0])
                 print("left")
             elif value[2] >20000 and value[0] > 20000:
@@ -96,7 +96,7 @@ def turnleft(dc):
         dc= Maxcorrectup
     elif dc < Mincorrectup:
         dc= Mincorrectup 
-    GPIO.output(left_list, 0)
+    GPIO.output(right_list, 0)
     pwmfrf.start(dc)
     pwmbrf.start(dc)
     pwmflb.start(dc)
@@ -111,7 +111,7 @@ def turnright(dc):
         dc=Maxcorrectdown
     elif dc > Mincorrectdown:
         dc=Mincorrectdown
-    GPIO.output(right_list, 0) 
+    GPIO.output(left_list, 0) 
     pwmflf.start(dc)
     pwmblf.start(dc)
     pwmfrb.start(dc)
