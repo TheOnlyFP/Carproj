@@ -64,10 +64,10 @@ def main2():
         while True:
             value = camcap()
             print(value)
-            if value[1] == int(0): #forward
+            if value[1] < 20000: #forward
                 Correction = 100
                 allforward(Correction)
-            elif value[0] > int(20000) and value[2] < 20000: #right
+            elif value[0] > 20000 and value[2] < 20000: #right
                 turnright(int(value[0]/61200)*100)
                 print("Value 2: ", value[2])
                 print("right")
