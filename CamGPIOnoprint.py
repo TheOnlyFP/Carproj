@@ -49,23 +49,19 @@ Setpoint=0
 Error=0
 Waittime=1000
 
-#Negative vals = turn right
-#Positive vals = turn left
-
 #Motorpins end
 
 def main():
     try:
         while True:
             value = camcap()
-            print(value)
-            if value[1] < 18000: #forward
+            if value[1] < 6000: #forward
                 allforward(50)
-            elif value[0] > 5000 and value[2] < 30000: #right
+            elif value[0] > 15000 and value[2] < 12000: #right
                 turnright(50)
-            elif value[2] > 5000 and value[0] < 30000: #Left
+            elif value[2] > 15000 and value[0] < 12000: #Left
                 turnleft(50)
-            elif value[2] > 20000 and value[0] > 20000:
+            elif value[2] > 15000 and value[0] > 15000:
                 backward(50)
                 #testfunc()
     except KeyboardInterrupt:

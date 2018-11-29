@@ -1,35 +1,30 @@
 import numpy as np
 import cv2
+from threading import Thread
 
 
 
 def camcap():
     global value
-    print("camcap")
     cap = cv2.VideoCapture(0)
     threshhold=90
+    width=80
+    height=40
+    ret = cap.set(3,80)
+    ret = cap.set(4,40)
     ret, frame = cap.read()
     if cap.isOpened() == 0:
         cap.open(0)
 
     greyframe = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    scaleing = 50
-
-    height = int(greyframe.shape[0]*scaleing / 100)
-    width = int(greyframe.shape[1]*scaleing / 100)
-
-    dim=(width, height)
-
-    greyframe = cv2.resize(greyframe, dim, interpolation = cv2.INTER_AREA)
-
     blackframe = cv2.threshold(greyframe, threshhold, 255, cv2.THRESH_BINARY)[1]
 
-    mid = sum(blackframe[:,int(width/2)])
+    mid = sum(blackframe[:,40])
 
-    left = sum(blackframe[:,int(width/3)])
+    left = sum(blackframe[:,26])
 
-    right = sum(blackframe[:,int((width/3)*2)])
+    right = sum(blackframe[:,53])
 
     #print("middle: ",mid)
     #print("left: ", left)
@@ -37,17 +32,19 @@ def camcap():
 
     #nonze = np.where(blackframe[int(height/2),:]==0)
 
-#    cv2.imshow('frame',blackframe)
+    cv2.imshow('frame',blackframe)
 
         #print(nonze)
 
+    if cv2.waitKey(1) == ord('q'):
+        cap.release()
+        cv2.destroyAllWindows()
+
     value=[left, mid, right]
 
-    return value
+    print(value)
 
-#    if cv2.waitKey(1) == ord('q'):
-#        cap.release()
-#        cv2.destroyAllWindows()
+    return value
 
 
 camcap()
