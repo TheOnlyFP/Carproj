@@ -6,7 +6,7 @@ import cv2
 def camcap():
     global value
     cap = cv2.VideoCapture(0)
-    threshhold=120
+    threshhold=90
     ret, frame = cap.read()
     if cap.isOpened() == 0:
         cap.open(0)
@@ -36,18 +36,19 @@ def camcap():
 
     #nonze = np.where(blackframe[int(height/2),:]==0)
 
-    #cv2.imshow('frame',blackframe)
+#    cv2.imshow('frame',blackframe)
 
-#        print(nonze)
+        #print(nonze)
 
     value=[left, mid, right]
 
     return value
-    
-    #if cv2.waitKey(1) == ord('q'):  
-    #    cap.release()
-    #    cv2.destroyAllWindows()
 
-camcap()
+##    if cv2.waitKey(1) == ord('q'):
+##        cap.release()
+##        cv2.destroyAllWindows()
+
+while True:
+    camcap()
 
 
