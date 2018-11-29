@@ -5,8 +5,6 @@ from time import sleep
 import numpy as np
 import cv2
 
-position = 0
-
 #import ends
 
 GPIO.setmode(GPIO.BCM)
@@ -51,13 +49,6 @@ Waittime=1000
 #Motorpins end
 
 def camcap():
-    global value
-    cap = cv2.VideoCapture(0)
-    threshhold=90
-    width=80
-    height=40
-    ret = cap.set(3,80)
-    ret = cap.set(4,40)
     ret, frame = cap.read()
     if cap.isOpened() == 0:
         cap.open(0)
@@ -71,12 +62,6 @@ def camcap():
     left = sum(blackframe[:,26])
 
     right = sum(blackframe[:,53])
-
-    #print("middle: ",mid)
-    #print("left: ", left)
-    #print("right: ", right)
-
-    #nonze = np.where(blackframe[int(height/2),:]==0)
 
     cv2.imshow('frame',blackframe)
 
@@ -92,10 +77,13 @@ def camcap():
 
     return value
 
-
-camcap()
-
 def main():
+    cap = cv2.VideoCapture(0)
+    threshhold=90
+    width=80
+    height=40
+    ret = cap.set(3,80)
+    ret = cap.set(4,40)
     try:
         while True:
             value = camcap()
