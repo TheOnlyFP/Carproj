@@ -77,6 +77,7 @@ def main2():
                 print("left")
             elif value[2] >20000 and value[0] > 20000:
                 print("backwards")
+                testfunc()
             print("end")
     except KeyboardInterrupt:
         GPIO.cleanup()
@@ -92,10 +93,6 @@ def allforward(dc):
     
 def turnleft(dc):
     print(dc)
-    if dc > Maxcorrectup:
-        dc= Maxcorrectup
-    elif dc < Mincorrectup:
-        dc= Mincorrectup 
     GPIO.output(right_list, 0)
     pwmfrf.start(dc)
     pwmbrf.start(dc)
@@ -103,19 +100,41 @@ def turnleft(dc):
     pwmblb.start(dc)
 
 #left_list = [26,16,21,6] #to turn car left
-#right_list = [19,13,20,5] # -\\- right 
+#right_list = [19,13,20,5] # -\\- right
+
+#mfl = f(19) b(26)
+#mbl = f(13) b(16)
+#mfr = f(21) b(20)
+#mbr = f(6)  b(5)
+
+motordict= {
+    "mflf":19,
+    "mflb":26,
+    "mblf":13,
+    "mblb":16,
+    "mfrf":21,
+    "mfrb":20,
+    "mbrf":6,
+    "mbrb":5,
+    }
 
 def turnright(dc):
     print(dc)
-    if dc < Maxcorrectdown:
-        dc=Maxcorrectdown
-    elif dc > Mincorrectdown:
-        dc=Mincorrectdown
-    GPIO.output(left_list, 0) 
+    GPIO.output(left_list, 0)
     pwmflf.start(dc)
     pwmblf.start(dc)
     pwmfrb.start(dc)
     pwmbrb.start(dc)
+
+def testfunc():
+    print("Test")
+    GPIO.output(all_list, 0)
+    iner = input("Please enter motor\n")
+    GPIO.output(motordict[iner],1)
+    input()
+    GPIO.output(motordict[iner],1)
+    input()
+    
 
 #function end
 
