@@ -95,7 +95,7 @@ def main():
         #ALL below needs tuning on the numbers as the framesize was changed
         while True:
             value = camcap()
-            if value[1] < 6000: #forward
+            if value[1] < 8000: #forward
                 allforward(50)
             elif value[0] > 15000 and value[2] < 12000: #right
                 turnright(50)
