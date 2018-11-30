@@ -50,6 +50,17 @@ Waittime=1000
 
 #Motorpins end
 
+cap = cv2.VideoCapture(0)
+width=80
+height=40
+ret = cap.set(3,80)
+ret = cap.set(4,40)
+#All this shit defines the taken picture
+threshhold=90
+#Defines threshhold for B/W conversion
+
+# ^ =cam setup, set here t make it global
+
 def camcap():
     ret, frame = cap.read()
     if cap.isOpened() == 0:
@@ -67,9 +78,9 @@ def camcap():
 
     cv2.imshow('frame',blackframe)  #Shows picture in frame called "frame"
 
-    if cv2.waitKey(0) == ord('q'):  #Allows for quitting the the frame
-        #cv2.waitKey was changed to 0 as it defines how many millisecond it should wait for keypress
-        #As no key is used: It's legacy code
+    if cv2.waitKey(1) == ord('q'):  #Allows for quitting the the frame
+        #Was changed back to 1 as it needs it to exist in a timeframe for it to display the frame
+        #and go forward in the code
         cap.release()
         cv2.destroyAllWindows()
 
@@ -80,14 +91,6 @@ def camcap():
     return value
 
 def main():
-    cap = cv2.VideoCapture(0)
-    width=80
-    height=40
-    ret = cap.set(3,80)
-    ret = cap.set(4,40)
-    #All this shit defines the taken picture
-    threshhold=90
-    #Defines threshhold for B/W conversion
     try:
         #ALL below needs tuning on the numbers as the framesize was changed
         while True:
@@ -98,7 +101,7 @@ def main():
                 turnright(50)
             elif value[2] > 15000 and value[0] < 12000: #Left
                 turnleft(50)
-            elif value[2] > 15000 and value[0] > 15000:
+            elif value[2] > 20000 and value[0] > 20000:
                 backward(50)
                 #testfunc()
     except KeyboardInterrupt:
